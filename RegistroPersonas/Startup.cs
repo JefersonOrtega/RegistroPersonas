@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RegistroPersonas.Data;
+using Blazored.Toast;
 
 namespace RegistroPersonas
 {

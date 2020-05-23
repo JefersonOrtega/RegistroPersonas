@@ -2,8 +2,10 @@
 
 @using Models
 @using RegistroPersonas.BLL
+@using Microsoft.AspNetCore.Components.Rendering
 
 @inject IToastService toast
+
 
 <EditForm Model="Persona" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -65,22 +67,21 @@
                     <ValidationMessage For="@(()=>Persona.FechaNacimiento)" />
                 </div>
             </form>
+
         </div>
 
         <div class="card-footer">
-            <div class="form-group text-center" display: inline-block>
+            <div class="form-group text-center" display: in line-block>
                 <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
                 <button type="submit" class="btn btn-lg btn-success">Guardar</button>
                 <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
             </div>
 
-            <button class="btn btn-info" @onclick="@(() => toast.ShowInfo("I'm an INFO message"))">Info Toast</button>
-            <button class="btn btn-success" @onclick="@(() => toast.ShowSuccess("I'm a SUCCESS message with a custom title", "Congratulations!"))">Success Toast</button>
-            <button class="btn btn-warning" @onclick="@(() => toast.ShowWarning("I'm a WARNING message"))">Warning Toast</button>
-            <button class="btn btn-danger" @onclick="@(() => toast.ShowError("I'm an ERROR message"))">Error Toast</button>
         </div>
-       
+
     </div>
+
+
 </EditForm>
 
 
@@ -91,7 +92,6 @@
     public int PersonaId { get; set; }
 
     private Personas Persona = new Personas();
-
 
     protected override void OnInitialized()
     {
@@ -133,7 +133,7 @@
             toast.ShowSuccess("Guardado Correctamente");
         }
         else
-            toast.ShowError("No se fue posible guardar");
+            toast.ShowError("No fue posible guardar");
 
     }
 
@@ -149,7 +149,10 @@
             toast.ShowSuccess("Eliminado Correctamente");
         }
         else
-            toast.ShowError("No se fue posible eliminar");
+            toast.ShowError("No fue posible eliminar");
     }
+
+    
+
 }
 
