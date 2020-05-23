@@ -1,0 +1,155 @@
+﻿@page "/Personas"
+
+@using Models
+@using RegistroPersonas.BLL
+
+@inject IToastService toast
+
+<EditForm Model="Persona" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="card-header">
+            <h3>Registro de Personas</h3>
+        </div>
+
+        <div class="card-body">
+            <form>
+                @*PersonaId*@
+                <div class="form-row align-items-center">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>EstudianteId</label>
+                            <div class="input-group">
+                                <InputNumber @bind-Value="Persona.PersonaId" class="form-control col-4" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary input-group-text" @onclick="Buscar">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Nombre*@
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <InputText @bind-Value="Persona.Nombre" class="form-control" />
+                    <ValidationMessage For="@(()=>Persona.Nombre)" />
+                </div>
+
+                @*Telefono*@
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <InputText @bind-Value="Persona.Telefono" class="form-control" />
+                    <ValidationMessage For="@(()=>Persona.Telefono)" />
+                </div>
+
+                @*Cedula*@
+                <div class="form-group">
+                    <label>Cédula</label>
+                    <InputText @bind-Value="Persona.Cedula" class="form-control" />
+                    <ValidationMessage For="@(()=>Persona.Cedula)" />
+                </div>
+
+
+                @*Direccion*@
+                <div class="form-group">
+                    <label>Dirección</label>
+                    <InputText @bind-Value="Persona.Direccion" class="form-control" />
+                    <ValidationMessage For="@(()=>Persona.Direccion)" />
+                </div>
+
+                @*Fecha de Nacimiento*@
+                <div class="form-group">
+                    <label>Fecha de Nacimiento</label>
+                    <InputDate @bind-Value="Persona.FechaNacimiento" class="form-control" />
+                    <ValidationMessage For="@(()=>Persona.FechaNacimiento)" />
+                </div>
+            </form>
+        </div>
+
+        <div class="card-footer">
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
+                <button type="submit" class="btn btn-lg btn-success">Guardar</button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+            </div>
+
+            <button class="btn btn-info" @onclick="@(() => toast.ShowInfo("I'm an INFO message"))">Info Toast</button>
+            <button class="btn btn-success" @onclick="@(() => toast.ShowSuccess("I'm a SUCCESS message with a custom title", "Congratulations!"))">Success Toast</button>
+            <button class="btn btn-warning" @onclick="@(() => toast.ShowWarning("I'm a WARNING message"))">Warning Toast</button>
+            <button class="btn btn-danger" @onclick="@(() => toast.ShowError("I'm an ERROR message"))">Error Toast</button>
+        </div>
+       
+    </div>
+</EditForm>
+
+
+
+
+@code {
+    [Parameter]
+    public int PersonaId { get; set; }
+
+    private Personas Persona = new Personas();
+
+
+    protected override void OnInitialized()
+    {
+        Nuevo();
+        Buscar();
+    }
+
+    public void Nuevo()
+    {
+        Persona = new Personas();
+    }
+
+    private void Buscar()
+    {
+        if (Persona.PersonaId > 0)
+        {
+            var encontrado = PersonasBLL.Buscar(Persona.PersonaId);
+
+            if (encontrado != null)
+                this.Persona = encontrado;
+            else
+            {
+                Nuevo();
+                toast.ShowWarning("No encontrado");
+            }
+
+        }
+    }
+
+    public void Guardar()
+    {
+        bool guardo;
+
+        guardo = PersonasBLL.Guardar(Persona);
+
+        if (guardo)
+        {
+            Nuevo();
+            toast.ShowSuccess("Guardado Correctamente");
+        }
+        else
+            toast.ShowError("No se fue posible guardar");
+
+    }
+
+    public void Eliminar()
+    {
+        bool elimino;
+
+        elimino = PersonasBLL.Eliminar(Persona.PersonaId);
+
+        if (elimino)
+        {
+            Nuevo();
+            toast.ShowSuccess("Eliminado Correctamente");
+        }
+        else
+            toast.ShowError("No se fue posible eliminar");
+    }
+}
+
