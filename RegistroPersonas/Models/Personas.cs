@@ -15,7 +15,7 @@ namespace RegistroPersonas.Models
         public string Nombre { get; set; }
 
         [Phone(ErrorMessage = "Debe introducir un número de teléfono válido")]
-        [Range (minimum:1, maximum:13, ErrorMessage = "Debe introducir un número de teléfono válido")]
+        [StringLength(15, ErrorMessage ="Debe introducir un número de teléfono válido")]
         public string Telefono { get; set; }
 
         [Required(ErrorMessage = "Es obigatorio introducir su cédula")]
@@ -26,6 +26,7 @@ namespace RegistroPersonas.Models
 
         [Required(ErrorMessage = "Es obligatorio introducir su fecha de nacimiento")]
         public DateTime FechaNacimiento { get; set; }
+        public double Balance { get; set; }
 
     }
 }

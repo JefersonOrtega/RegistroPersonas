@@ -9,8 +9,8 @@ using RegistroPersonas.DAL;
 namespace RegistroPersonas.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20200530011004_Migracion_Secundaria")]
-    partial class Migracion_Secundaria
+    [Migration("20200530211939_Migracion_Prestamos")]
+    partial class Migracion_Prestamos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,9 @@ namespace RegistroPersonas.Migrations
                     b.Property<int>("PersonaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("Balance")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("Cedula")
                         .IsRequired()
@@ -40,7 +43,8 @@ namespace RegistroPersonas.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Telefono")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(15);
 
                     b.HasKey("PersonaId");
 
@@ -71,7 +75,18 @@ namespace RegistroPersonas.Migrations
 
                     b.HasKey("PrestamoId");
 
+                    b.HasIndex("PersonaId");
+
                     b.ToTable("Prestamos");
+                });
+
+            modelBuilder.Entity("RegistroPersonas.Models.Prestamos", b =>
+                {
+                    b.HasOne("RegistroPersonas.Models.Personas", "Persona")
+                        .WithMany()
+                        .HasForeignKey("PersonaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

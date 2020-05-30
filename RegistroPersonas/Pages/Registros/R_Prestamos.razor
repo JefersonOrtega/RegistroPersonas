@@ -1,26 +1,27 @@
 ﻿@page "/Prestamos"
 @page "/Prestamos/{PrestamoId:int}"
- 
+
 @using Models
 @using RegistroPersonas.BLL
 
 
-@inject IToastService toast  
+@inject IToastService toast
+
 
 <EditForm Model="Prestamo" OnValidSubmit="Guardar">
-    <DataAnnotationsValidator/>
+    <DataAnnotationsValidator />
     <div class="card">
         <div class="card-header">
             <h3>Registro de Prestamos</h3>
-        </div>
+        </div> 
         <div class="card-body">
-            <form>
+            <form> 
 
                 @*PrestamoId*@
                 <div class="form-row align-items-center">
                     <div class="col">
                         <div class="form-group">
-                            <label>EstudianteId</label>
+                            <label>PrestamoId</label>
                             <div class="input-group">
                                 <InputNumber @bind-Value="Prestamo.PrestamoId" class="form-control col-4" />
                                 <div class="input-group-append">
@@ -42,7 +43,13 @@
                 @*PersonaId*@
                 <div class="form-group">
                     <label>Persona</label>
-                    <InputSelect @bind-Value="Prestamo.PersonaId" class="form-control" />
+                    <InputSelectNumber @bind-Value="Prestamo.PersonaId" class="form-control">
+                        <option value="" disabled selected>Seleccione una persona</option>
+                        @foreach (var auxiliar in CargarPersonas())
+                        {
+                            <option value="@auxiliar.PersonaId">@auxiliar.Nombre</option>
+                        }
+                    </InputSelectNumber>
                     <ValidationMessage For="@(()=>Prestamo.PersonaId)" />
                 </div>
 
@@ -63,8 +70,7 @@
                 @*Balance*@
                 <div class="form-group">
                     <label>Balance</label>
-                    <InputNumber @bind-Value="Prestamo.Balance" class="form-control" ReadOlny="true" />
-                    <ValidationMessage For="@(()=>Prestamo.Balance)" />
+                    <InputNumber ReadOnly id="Balance" @bind-Value="Prestamo.Balance" class="form-control" />
                 </div>
             </form>
         </div>
@@ -92,6 +98,8 @@
         Nuevo();
 
         Buscar();
+
+        CargarPersonas();
     }
 
     public void Nuevo()
@@ -111,6 +119,22 @@
                 toast.ShowWarning("No encontrado");
 
         }
+    }
+
+    public List<Personas> CargarPersonas()
+    {
+        List<Personas> lista = new List<Personas>();
+
+        try
+        {
+            lista = PersonasBLL.GetPersonas();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+
+        return lista;
     }
 
     public void Guardar()

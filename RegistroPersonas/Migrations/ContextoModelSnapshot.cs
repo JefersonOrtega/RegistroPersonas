@@ -22,6 +22,9 @@ namespace RegistroPersonas.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<double>("Balance")
+                        .HasColumnType("REAL");
+
                     b.Property<string>("Cedula")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -38,7 +41,8 @@ namespace RegistroPersonas.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Telefono")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(15);
 
                     b.HasKey("PersonaId");
 
@@ -69,7 +73,18 @@ namespace RegistroPersonas.Migrations
 
                     b.HasKey("PrestamoId");
 
+                    b.HasIndex("PersonaId");
+
                     b.ToTable("Prestamos");
+                });
+
+            modelBuilder.Entity("RegistroPersonas.Models.Prestamos", b =>
+                {
+                    b.HasOne("RegistroPersonas.Models.Personas", "Persona")
+                        .WithMany()
+                        .HasForeignKey("PersonaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

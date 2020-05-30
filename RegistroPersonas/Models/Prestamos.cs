@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,10 @@ namespace RegistroPersonas.Models
         public DateTime Fecha { get; set; }
         [Required(ErrorMessage ="Es Necesario seleccionar la Persona")]
         public int PersonaId { get; set; }
+        [ForeignKey("PersonaId")]
+        public virtual Personas Persona { get; set; }
+
+
         [Required(ErrorMessage = "Es necesario introducir el concepto")]
         public string Concepto { get; set; }
         [Required(ErrorMessage = "Es necesario introducir un monto")]

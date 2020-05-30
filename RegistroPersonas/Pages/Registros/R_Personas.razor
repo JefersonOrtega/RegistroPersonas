@@ -66,6 +66,13 @@
                     <InputDate @bind-Value="Persona.FechaNacimiento" class="form-control" />
                     <ValidationMessage For="@(()=>Persona.FechaNacimiento)" />
                 </div>
+
+                @*Balance*@
+                <div class="form-group">
+                    <label>Balance</label>
+                    <InputNumber ReadOnly @bind-Value="Persona.Balance" class="form-control" />
+
+                </div>
             </form>
 
         </div>

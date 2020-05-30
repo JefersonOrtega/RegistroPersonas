@@ -9,6 +9,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200522175809_Migracion-Inicial.cs" />
     <Compile Remove="Migrations\20200522175809_Migracion-Inicial.Designer.cs" />
+    <Compile Remove="Migrations\20200530011004_Migracion_Secundaria.cs" />
+    <Compile Remove="Migrations\20200530011004_Migracion_Secundaria.Designer.cs" />
+    <Compile Remove="Migrations\20200530171059_Migracion_Prestamos.cs" />
+    <Compile Remove="Migrations\20200530171059_Migracion_Prestamos.Designer.cs" />
+    <Compile Remove="Migrations\20200530190923_Migracion_Prestamos.cs" />
+    <Compile Remove="Migrations\20200530190923_Migracion_Prestamos.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,12 +24,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Data\RegistroPersonas.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
