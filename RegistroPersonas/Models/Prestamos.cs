@@ -25,5 +25,6 @@ namespace RegistroPersonas.Models
         public double Monto { get; set; }
         public double Balance { get; set; }
 
+
     }
 }

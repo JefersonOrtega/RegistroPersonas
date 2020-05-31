@@ -10,7 +10,7 @@ namespace RegistroPersonas.Models
     {
         [Key]
         public int PersonaId { get; set; }
-
+        
         [Required(ErrorMessage = "Es obligatorio introducir el nombre")]
         public string Nombre { get; set; }
 
