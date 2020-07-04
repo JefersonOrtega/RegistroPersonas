@@ -3,15 +3,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RegistroPersonas.Migrations
 {
-    public partial class Migracion_Prestamos : Migration
+    public partial class Migracion_Incial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<double>(
-                name: "Balance",
-                table: "Personas",
-                nullable: false,
-                defaultValue: 0.0);
+            migrationBuilder.CreateTable(
+                name: "Personas",
+                columns: table => new
+                {
+                    PersonaId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nombre = table.Column<string>(nullable: false),
+                    Telefono = table.Column<string>(maxLength: 15, nullable: true),
+                    Cedula = table.Column<string>(nullable: false),
+                    Direccion = table.Column<string>(nullable: false),
+                    FechaNacimiento = table.Column<DateTime>(nullable: false),
+                    Balance = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Personas", x => x.PersonaId);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Prestamos",
@@ -47,9 +59,8 @@ namespace RegistroPersonas.Migrations
             migrationBuilder.DropTable(
                 name: "Prestamos");
 
-            migrationBuilder.DropColumn(
-                name: "Balance",
-                table: "Personas");
+            migrationBuilder.DropTable(
+                name: "Personas");
         }
     }
 }
